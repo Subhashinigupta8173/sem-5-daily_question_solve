@@ -1,16 +1,17 @@
-// Last updated: 28/8/2025, 7:40:17 am
+// Last updated: 28/8/2025, 7:56:54 am
 class Solution {
-    public boolean isPalindrome(int x) {
-        String s=String.valueOf(x);
-        int i=0,j=s.length()-1;
-        while(i<j){
-            if(s.charAt(i)!=s.charAt(j)) return false;
-            i++;
-            j--;
-        }
-        return true;
+    public String intToRoman(int num) {
+        int[] values =    {1000, 900, 500, 400, 100, 90,  50, 40,  10, 9,   5, 4,  1};
+        String[] symbols = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
 
-          
+        StringBuilder sb=new StringBuilder();
+        for(int i=0; i<values.length; i++){
+            while(num>=values[i]){
+                num-=values[i];
+                sb.append(symbols[i]);
+            }
+        }
+        return sb.toString();
         
     }
 }
