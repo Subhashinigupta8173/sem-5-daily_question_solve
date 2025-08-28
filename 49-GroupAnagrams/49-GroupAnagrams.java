@@ -1,35 +1,84 @@
-// Last updated: 28/8/2025, 11:22:38 am
+// Last updated: 28/8/2025, 12:03:11 pm
+import java.util.*;
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
-    public List<List<String>> groupAnagrams(String[] strs) {
-    
-    return ga(strs);
-    
-    }
-    public static List<List<String>> ga(String[] arr){
-        HashMap<String,List<String>> map=new HashMap<>();
-        for(int i=0;i<arr.length;i++){
-            String key=GetKey(arr[i]);
-            if(!map.containsKey(key)){
-                map.put(key,new ArrayList<>());
+
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        Queue<VerticalPair> q = new LinkedList<>();
+        TreeMap<Integer, List<VerticalPair>> map = new TreeMap<>();
+
+        // start BFS
+        q.add(new VerticalPair(root, 0, 0));
+
+        while (!q.isEmpty()) {
+            VerticalPair vp = q.poll();
+
+            // add node to map
+            if (!map.containsKey(vp.vt)) {
+                map.put(vp.vt, new ArrayList<>());
             }
-            map.get(key).add(arr[i]);
+            map.get(vp.vt).add(vp);
+
+            // add children with updated row/col
+            if (vp.node.left != null) {
+                q.add(new VerticalPair(vp.node.left, vp.lv + 1, vp.vt - 1));
+            }
+            if (vp.node.right != null) {
+                q.add(new VerticalPair(vp.node.right, vp.lv + 1, vp.vt + 1));
+            }
         }
-        List<List<String>> ll=new ArrayList<>();
-        for(String key:map.keySet()){
-            ll.add(map.get(key));
+
+        // prepare result
+        List<List<Integer>> ans = new ArrayList<>();
+
+        for (int key : map.keySet()) {
+            List<VerticalPair> ll = map.get(key);
+
+            // sort by row first, then by value
+            Collections.sort(ll, new Comparator<VerticalPair>() {
+                @Override
+                public int compare(VerticalPair o1, VerticalPair o2) {
+                    if (o1.lv == o2.lv) {
+                        return o1.node.val - o2.node.val;
+                    }
+                    return o1.lv - o2.lv;
+                }
+            });
+
+            // collect values
+            List<Integer> list = new ArrayList<>();
+            for (VerticalPair v : ll) {
+                list.add(v.node.val);
+            }
+            ans.add(list);
         }
-        return ll;
+
+        return ans;
     }
-    public static String GetKey(String s){
-        int[] freq=new int[26];
-        for(int i=0;i<s.length();i++){
-            char ch=s.charAt(i);
-            freq[ch-'a']++;
+
+    public class VerticalPair {
+        TreeNode node;
+        int lv; // row (level)
+        int vt; // column
+        public VerticalPair(TreeNode node, int lv, int vt) {
+            this.node = node;
+            this.lv = lv;
+            this.vt = vt;
         }
-        StringBuilder sb=new StringBuilder();
-        for(int i=0;i<freq.length;i++){
-            sb.append(freq[i]+" ");
-        }
-        return sb.toString();
     }
 }
