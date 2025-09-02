@@ -1,42 +1,20 @@
-// Last updated: 2/9/2025, 10:58:54 pm
-import java.util.*;
-
+// Last updated: 2/9/2025, 11:02:03 pm
 class Solution {
-    public List<String> restoreIpAddresses(String s) {
-        List<String> result = new ArrayList<>();
-        backtrack(s, 0, new ArrayList<>(), result);
-        return result;
-    }
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) return false;
 
-    private void backtrack(String s, int start, List<String> path, List<String> result) {
-        
-        if (path.size() == 4) {
-            
-            if (start == s.length()) {
-                result.add(String.join(".", path));
-            }
-            return;
+        int[] count = new int[26];
+
+   
+        for (int i = 0; i < s.length(); i++) {
+            count[s.charAt(i) - 'a']++;
+            count[t.charAt(i) - 'a']--;
         }
 
-        
-        for (int len = 1; len <= 3; len++) {
-            if (start + len > s.length()) break; 
-            String segment = s.substring(start, start + len);
-
-            
-            if (segment.startsWith("0") && segment.length() > 1) continue;
-
-            int value = Integer.parseInt(segment);
-            if (value > 255) continue;
-
-           
-            path.add(segment);
-
-            
-            backtrack(s, start + len, path, result);
-
-          
-            path.remove(path.size() - 1);
+    
+        for (int c : count) {
+            if (c != 0) return false;
         }
+        return true;
     }
 }
