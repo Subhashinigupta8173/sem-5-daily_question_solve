@@ -1,30 +1,30 @@
-// Last updated: 2/9/2025, 11:11:40 pm
+// Last updated: 2/9/2025, 11:15:44 pm
 import java.util.*;
 
 class Solution {
-    public int[] intersect(int[] nums1, int[] nums2) {
-        Map<Integer, Integer> countMap = new HashMap<>();
-        List<Integer> result = new ArrayList<>();
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> resultSet = new HashSet<>();
 
-        
+     
         for (int num : nums1) {
-            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+            set1.add(num);
         }
 
-        
+      
         for (int num : nums2) {
-            if (countMap.getOrDefault(num, 0) > 0) {
-                result.add(num);
-                countMap.put(num, countMap.get(num) - 1);
+            if (set1.contains(num)) {
+                resultSet.add(num);
             }
         }
 
-        
-        int[] resArr = new int[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            resArr[i] = result.get(i);
+      
+        int[] result = new int[resultSet.size()];
+        int i = 0;
+        for (int num : resultSet) {
+            result[i++] = num;
         }
 
-        return resArr;
+        return result;
     }
 }
