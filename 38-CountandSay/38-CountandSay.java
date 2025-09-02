@@ -1,30 +1,42 @@
-// Last updated: 2/9/2025, 10:56:36 pm
+// Last updated: 2/9/2025, 10:58:54 pm
+import java.util.*;
+
 class Solution {
-    public String addBinary(String a, String b) {
-        StringBuilder sb = new StringBuilder();
+    public List<String> restoreIpAddresses(String s) {
+        List<String> result = new ArrayList<>();
+        backtrack(s, 0, new ArrayList<>(), result);
+        return result;
+    }
 
-        int i = a.length() - 1;
-        int j = b.length() - 1;
-        int carry = 0;
-
-       
-        while (i >= 0 || j >= 0 || carry > 0) {
-            int sum = carry;
-
-            if (i >= 0) {
-                sum += a.charAt(i) - '0'; 
-                i--;
+    private void backtrack(String s, int start, List<String> path, List<String> result) {
+        
+        if (path.size() == 4) {
+            
+            if (start == s.length()) {
+                result.add(String.join(".", path));
             }
-
-            if (j >= 0) {
-                sum += b.charAt(j) - '0';
-                j--;
-            }
-
-            sb.append(sum % 2);  
-            carry = sum / 2;    
+            return;
         }
 
-        return sb.reverse().toString();
+        
+        for (int len = 1; len <= 3; len++) {
+            if (start + len > s.length()) break; 
+            String segment = s.substring(start, start + len);
+
+            
+            if (segment.startsWith("0") && segment.length() > 1) continue;
+
+            int value = Integer.parseInt(segment);
+            if (value > 255) continue;
+
+           
+            path.add(segment);
+
+            
+            backtrack(s, start + len, path, result);
+
+          
+            path.remove(path.size() - 1);
+        }
     }
 }
