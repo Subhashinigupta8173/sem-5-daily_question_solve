@@ -1,30 +1,12 @@
-// Last updated: 2/9/2025, 11:15:58 pm
-import java.util.*;
-
+// Last updated: 2/9/2025, 11:17:59 pm
 class Solution {
-    public int[] intersection(int[] nums1, int[] nums2) {
-        Set<Integer> set1 = new HashSet<>();
-        Set<Integer> resultSet = new HashSet<>();
+    public char findTheDifference(String s, String t) {
+        char res = 0;
 
-     
-        for (int num : nums1) {
-            set1.add(num);
-        }
+       
+        for (char c : s.toCharArray()) res ^= c;
+        for (char c : t.toCharArray()) res ^= c;
 
-      
-        for (int num : nums2) {
-            if (set1.contains(num)) {
-                resultSet.add(num);
-            }
-        }
-
-      
-        int[] result = new int[resultSet.size()];
-        int i = 0;
-        for (int num : resultSet) {
-            result[i++] = num;
-        }
-
-        return result;
+        return res;
     }
 }
