@@ -1,16 +1,10 @@
-// Last updated: 3/9/2025, 8:05:20 am
+// Last updated: 3/9/2025, 8:06:03 am
 class Solution {
-    public String convertToTitle(int columnNumber) {
-        StringBuilder sb = new StringBuilder();
-
-        while (columnNumber > 0) {
-            columnNumber--; 
-            int remainder = columnNumber % 26;
-            char c = (char) ('A' + remainder);
-            sb.append(c);
-            columnNumber /= 26;
+    public int titleToNumber(String columnTitle) {
+        int result = 0;
+        for (char c : columnTitle.toCharArray()) {
+            result = result * 26 + (c - 'A' + 1);
         }
-
-        return sb.reverse().toString();
+        return result;
     }
 }
