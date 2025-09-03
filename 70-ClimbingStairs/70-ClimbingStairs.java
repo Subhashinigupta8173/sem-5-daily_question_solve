@@ -1,7 +1,16 @@
-// Last updated: 3/9/2025, 8:08:41 am
+// Last updated: 3/9/2025, 8:09:46 am
 class Solution {
-    public int addDigits(int num) {
-        if (num == 0) return 0;
-        return 1 + (num - 1) % 9;
+    public boolean isUgly(int n) {
+        if (n <= 0) return false;
+        
+        int[] factors = {2, 3, 5};
+        for (int f : factors) {
+            while (n % f == 0) {
+                n /= f;
+            }
+        }
+        return n == 1;
     }
 }
+
+
