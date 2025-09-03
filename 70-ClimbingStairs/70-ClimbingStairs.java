@@ -1,10 +1,23 @@
-// Last updated: 3/9/2025, 8:06:03 am
+// Last updated: 3/9/2025, 8:06:52 am
+import java.util.HashSet;
+
 class Solution {
-    public int titleToNumber(String columnTitle) {
-        int result = 0;
-        for (char c : columnTitle.toCharArray()) {
-            result = result * 26 + (c - 'A' + 1);
+    public boolean isHappy(int n) {
+        HashSet<Integer> seen = new HashSet<>();
+        while (n != 1 && !seen.contains(n)) {
+            seen.add(n);
+            n = getNext(n);
         }
-        return result;
+        return n == 1;
+    }
+    
+    private int getNext(int n) {
+        int sum = 0;
+        while (n > 0) {
+            int digit = n % 10;
+            sum += digit * digit;
+            n /= 10;
+        }
+        return sum;
     }
 }
