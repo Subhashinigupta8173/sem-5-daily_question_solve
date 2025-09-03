@@ -1,16 +1,15 @@
-// Last updated: 3/9/2025, 8:09:46 am
+// Last updated: 3/9/2025, 8:10:43 am
 class Solution {
-    public boolean isUgly(int n) {
-        if (n <= 0) return false;
-        
-        int[] factors = {2, 3, 5};
-        for (int f : factors) {
-            while (n % f == 0) {
-                n /= f;
+    public int numSquares(int n) {
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j * j <= i; j++) {
+                dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
             }
         }
-        return n == 1;
+        return dp[n];
     }
 }
-
-
