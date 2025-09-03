@@ -1,6 +1,7 @@
-// Last updated: 3/9/2025, 8:07:40 am
+// Last updated: 3/9/2025, 8:08:41 am
 class Solution {
-    public boolean isPowerOfTwo(int n) {
-        return n > 0 && (n & (n - 1)) == 0;
+    public int addDigits(int num) {
+        if (num == 0) return 0;
+        return 1 + (num - 1) % 9;
     }
 }
