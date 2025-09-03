@@ -1,17 +1,16 @@
-// Last updated: 3/9/2025, 8:04:28 am
+// Last updated: 3/9/2025, 8:05:20 am
 class Solution {
-    public int climbStairs(int n) {
-        if (n <= 2) return n;
+    public String convertToTitle(int columnNumber) {
+        StringBuilder sb = new StringBuilder();
 
-        int prev2 = 1; 
-        int prev1 = 2; 
-
-        for (int i = 3; i <= n; i++) {
-            int curr = prev1 + prev2;
-            prev2 = prev1;
-            prev1 = curr;
+        while (columnNumber > 0) {
+            columnNumber--; 
+            int remainder = columnNumber % 26;
+            char c = (char) ('A' + remainder);
+            sb.append(c);
+            columnNumber /= 26;
         }
 
-        return prev1;
+        return sb.reverse().toString();
     }
 }
