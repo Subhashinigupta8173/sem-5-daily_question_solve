@@ -1,8 +1,7 @@
-// Last updated: 10/9/2025, 12:37:41 pm
+// Last updated: 10/9/2025, 12:39:21 pm
 class Solution {
     public int minFallingPathSum(int[][] matrix) {
-        // int [][] matrix= {{2,1,3},{6,5,4},{7,8,9}};
-		int ans=Integer.MAX_VALUE;
+        int ans=Integer.MAX_VALUE;
 		int [][] dp=new int[matrix.length][matrix[0].length];
 		for(int[] a:dp) {
 			Arrays.fill(a, -66666);
@@ -11,7 +10,6 @@ class Solution {
 			ans=Math.min(ans, Minimum_falling_path(matrix,0,col,dp));
 		}
         return ans;
-
 	}
 	public static int Minimum_falling_path(int[][] matrix,int cr,int cc,int [] [] dp ) {
 		if(cc<0 | cc>=matrix[0].length) {
