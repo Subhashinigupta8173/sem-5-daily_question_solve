@@ -1,25 +1,22 @@
-// Last updated: 22/9/2025, 9:17:29 pm
-import java.util.*;
+// Last updated: 22/9/2025, 9:19:00 pm
+class NumArray {
+    private int[] prefix; // stores prefix sums
 
-class Solution {
-    public List<String> summaryRanges(int[] nums) {
-        List<String> res = new ArrayList<>();
-        if (nums == null || nums.length == 0) return res;
-
-        int start = nums[0];
-
-        for (int i = 1; i <= nums.length; i++) {
-            // check if end of range
-            if (i == nums.length || nums[i] != nums[i-1] + 1) {
-                if (start == nums[i-1]) {
-                    res.add(String.valueOf(start)); // single number
-                } else {
-                    res.add(start + "->" + nums[i-1]); // range
-                }
-                if (i < nums.length) start = nums[i]; // start new range
-            }
+    public NumArray(int[] nums) {
+        int n = nums.length;
+        prefix = new int[n + 1]; // prefix[0] = 0
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = prefix[i] + nums[i]; // build prefix sum
         }
-
-        return res;
+    }
+    
+    public int sumRange(int left, int right) {
+        return prefix[right + 1] - prefix[left]; // O(1) query
     }
 }
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * int param_1 = obj.sumRange(left,right);
+ */
