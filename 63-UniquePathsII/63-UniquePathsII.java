@@ -1,17 +1,21 @@
-// Last updated: 22/9/2025, 9:04:37 pm
+// Last updated: 22/9/2025, 9:06:41 pm
 class Solution {
-    public List<Integer> getRow(int rowIndex) {
-        List<Integer> row = new ArrayList<>();
-        row.add(1); // row 0
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        int[] dp = new int[n];
 
-        for (int i = 1; i <= rowIndex; i++) {
-            // Update from right to left
-            for (int j = row.size() - 1; j >= 1; j--) {
-                row.set(j, row.get(j) + row.get(j - 1));
-            }
-            row.add(1); // last element
+        // initialize dp with last row
+        for (int j = 0; j < n; j++) {
+            dp[j] = triangle.get(n - 1).get(j);
         }
 
-        return row;
+        // start from second last row
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = 0; j <= i; j++) {
+                dp[j] = triangle.get(i).get(j) + Math.min(dp[j], dp[j + 1]);
+            }
+        }
+
+        return dp[0];
     }
 }
