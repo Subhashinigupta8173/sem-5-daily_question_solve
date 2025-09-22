@@ -1,18 +1,19 @@
-// Last updated: 22/9/2025, 9:10:35 pm
+// Last updated: 22/9/2025, 9:13:13 pm
 class Solution {
-    public int singleNumber(int[] nums) {
-        int result = 0;
-        // iterate over all 32 bits
-        for (int i = 0; i < 32; i++) {
-            int sum = 0;
-            for (int num : nums) {
-                sum += (num >> i) & 1;
-            }
-            // set the i-th bit of result
-            if (sum % 3 != 0) {
-                result |= (1 << i);
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordSet = new HashSet<>(wordDict); // fast lookup
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && wordSet.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
             }
         }
-        return result;
+
+        return dp[s.length()];
     }
 }
