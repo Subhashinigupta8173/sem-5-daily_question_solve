@@ -1,4 +1,4 @@
-// Last updated: 22/9/2025, 7:11:33 pm
+// Last updated: 22/9/2025, 7:11:47 pm
 class Solution {
     public boolean isValidSudoku(char[][] board) {
         HashSet<Character>[] rows = new HashSet[9];
