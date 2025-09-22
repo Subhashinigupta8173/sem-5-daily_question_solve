@@ -1,25 +1,18 @@
-// Last updated: 22/9/2025, 8:58:19 pm
+// Last updated: 22/9/2025, 8:59:54 pm
 class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        int m = matrix.length;
-        int n = matrix[0].length;
+    public int removeDuplicates(int[] nums) {
+        int n = nums.length;
+        if (n <= 2) return n; 
 
-        int left = 0, right = m * n - 1;
+        int slow = 2; 
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            int midVal = matrix[mid / n][mid % n];
-
-            if (midVal == target) {
-                return true;
-            } else if (midVal < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
+        for (int fast = 2; fast < n; fast++) {
+            if (nums[fast] != nums[slow - 2]) {
+                nums[slow] = nums[fast];
+                slow++;
             }
         }
 
-        return false;
+        return slow; 
     }
 }
