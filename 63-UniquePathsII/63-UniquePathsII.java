@@ -1,18 +1,36 @@
-// Last updated: 22/9/2025, 8:59:54 pm
+// Last updated: 22/9/2025, 9:01:12 pm
 class Solution {
-    public int removeDuplicates(int[] nums) {
-        int n = nums.length;
-        if (n <= 2) return n; 
+    public boolean search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
 
-        int slow = 2; 
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
 
-        for (int fast = 2; fast < n; fast++) {
-            if (nums[fast] != nums[slow - 2]) {
-                nums[slow] = nums[fast];
-                slow++;
+            if (nums[mid] == target) return true;
+
+    
+            if (nums[left] < nums[mid]) {
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } 
+            
+            else if (nums[mid] < nums[right]) {
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            } 
+            
+            else {
+                if (nums[left] == nums[mid]) left++;
+                if (nums[right] == nums[mid]) right--;
             }
         }
 
-        return slow; 
+        return false;
     }
 }
