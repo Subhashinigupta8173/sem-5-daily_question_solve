@@ -1,54 +1,41 @@
-// Last updated: 22/9/2025, 9:21:33 pm
-import java.util.*;
-
+// Last updated: 22/9/2025, 9:23:10 pm
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
-    public List<List<String>> solveNQueens(int n) {
-        List<List<String>> result = new ArrayList<>();
-        char[][] board = new char[n][n];
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) return head;
 
-        // Initialize board with '.'
-        for (int i = 0; i < n; i++)
-            Arrays.fill(board[i], '.');
-
-        backtrack(result, board, 0, n);
-        return result;
-    }
-
-    private void backtrack(List<List<String>> result, char[][] board, int row, int n) {
-        if (row == n) {
-            result.add(construct(board));
-            return;
+        // Step 1: find the length
+        ListNode tail = head;
+        int n = 1;
+        while (tail.next != null) {
+            tail = tail.next;
+            n++;
         }
 
-        for (int col = 0; col < n; col++) {
-            if (isSafe(board, row, col, n)) {
-                board[row][col] = 'Q';       // Place queen
-                backtrack(result, board, row + 1, n); // Move to next row
-                board[row][col] = '.';       // Backtrack
-            }
+        // Step 2: effective rotations
+        k = k % n;
+        if (k == 0) return head;
+
+        // Step 3: find new tail at (n - k - 1)
+        ListNode newTail = head;
+        for (int i = 0; i < n - k - 1; i++) {
+            newTail = newTail.next;
         }
-    }
 
-    private boolean isSafe(char[][] board, int row, int col, int n) {
-        // Check column
-        for (int i = 0; i < row; i++)
-            if (board[i][col] == 'Q') return false;
+        // Step 4: make new head and break the list
+        ListNode newHead = newTail.next;
+        newTail.next = null;
+        tail.next = head;  // connect old tail to old head
 
-        // Check upper-left diagonal
-        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--)
-            if (board[i][j] == 'Q') return false;
-
-        // Check upper-right diagonal
-        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++)
-            if (board[i][j] == 'Q') return false;
-
-        return true;
-    }
-
-    private List<String> construct(char[][] board) {
-        List<String> res = new ArrayList<>();
-        for (int i = 0; i < board.length; i++)
-            res.add(new String(board[i]));
-        return res;
+        return newHead;
     }
 }
