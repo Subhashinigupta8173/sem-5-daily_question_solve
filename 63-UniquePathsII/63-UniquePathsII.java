@@ -1,36 +1,23 @@
-// Last updated: 22/9/2025, 9:01:12 pm
+// Last updated: 22/9/2025, 9:02:18 pm
 class Solution {
-    public boolean search(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums); // Step 1: sort to handle duplicates
+        backtrack(nums, 0, new ArrayList<>(), result);
+        return result;
+    }
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
+    private void backtrack(int[] nums, int start, List<Integer> tempList, List<List<Integer>> result) {
+        result.add(new ArrayList<>(tempList)); // add current subset
 
-            if (nums[mid] == target) return true;
+        for (int i = start; i < nums.length; i++) {
+            // skip duplicates
+            if (i > start && nums[i] == nums[i - 1]) continue;
 
-    
-            if (nums[left] < nums[mid]) {
-                if (nums[left] <= target && target < nums[mid]) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            } 
-            
-            else if (nums[mid] < nums[right]) {
-                if (nums[mid] < target && target <= nums[right]) {
-                    left = mid + 1;
-                } else {
-                    right = mid - 1;
-                }
-            } 
-            
-            else {
-                if (nums[left] == nums[mid]) left++;
-                if (nums[right] == nums[mid]) right--;
-            }
+            tempList.add(nums[i]);             // choose
+            backtrack(nums, i + 1, tempList, result); // explore
+            tempList.remove(tempList.size() - 1);     // un-choose (backtrack)
         }
-
-        return false;
     }
 }
+
