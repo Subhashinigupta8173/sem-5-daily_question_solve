@@ -1,44 +1,34 @@
-// Last updated: 23/9/2025, 11:44:38 pm
+// Last updated: 23/9/2025, 11:45:54 pm
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
-    public boolean isMatch(String s, String p) {
-        int m = s.length();
-        int n = p.length();
-        
-        // dp[i][j] = true if first i chars of s match first j chars of p
-        boolean[][] dp = new boolean[m + 1][n + 1];
-        
-        // Empty string matches empty pattern
-        dp[0][0] = true;
-        
-        // Fill first row (s is empty)
-        for (int j = 1; j <= n; j++) {
-            if (p.charAt(j - 1) == '*') {
-                // '*' can eliminate the preceding character
-                dp[0][j] = dp[0][j - 2];
-            }
+    public ListNode swapPairs(ListNode head) {
+        // Dummy node to simplify head swaps
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+
+        while (prev.next != null && prev.next.next != null) {
+            ListNode first = prev.next;
+            ListNode second = first.next;
+
+            // Swap the pair
+            first.next = second.next;
+            second.next = first;
+            prev.next = second;
+
+            // Move prev pointer for next pair
+            prev = first;
         }
-        
-        // Fill the DP table
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                char sc = s.charAt(i - 1);
-                char pc = p.charAt(j - 1);
-                
-                if (pc == sc || pc == '.') {
-                    dp[i][j] = dp[i - 1][j - 1]; // Match current char
-                } else if (pc == '*') {
-                    char prev = p.charAt(j - 2);
-                    // Two possibilities:
-                    // 1. Treat '*' as zero occurrence of previous char
-                    dp[i][j] = dp[i][j - 2];
-                    // 2. Treat '*' as multiple occurrences if previous char matches
-                    if (prev == sc || prev == '.') {
-                        dp[i][j] = dp[i][j] || dp[i - 1][j];
-                    }
-                }
-            }
-        }
-        
-        return dp[m][n];
+
+        return dummy.next;
     }
 }
