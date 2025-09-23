@@ -1,32 +1,16 @@
-// Last updated: 23/9/2025, 6:06:03 am
-
-
+// Last updated: 23/9/2025, 6:06:52 am
 class Solution {
-    public List<List<String>> partition(String s) {
-        List<List<String>> result = new ArrayList<>();
-        backtrack(s, 0, new ArrayList<>(), result);
-        return result;
-    }
-
-    private void backtrack(String s, int start, List<String> current, List<List<String>> result) {
-        if (start == s.length()) {
-            result.add(new ArrayList<>(current));
-            return;
+    public String reverseWords(String s) {
+        // Trim and split by one or more spaces
+        String[] words = s.trim().split("\\s+");
+        
+        // Reverse words
+        StringBuilder sb = new StringBuilder();
+        for (int i = words.length - 1; i >= 0; i--) {
+            sb.append(words[i]);
+            if (i > 0) sb.append(" ");
         }
-
-        for (int end = start; end < s.length(); end++) {
-            if (isPalindrome(s, start, end)) {
-                current.add(s.substring(start, end + 1));
-                backtrack(s, end + 1, current, result);
-                current.remove(current.size() - 1); // backtrack
-            }
-        }
-    }
-
-    private boolean isPalindrome(String s, int left, int right) {
-        while (left < right) {
-            if (s.charAt(left++) != s.charAt(right--)) return false;
-        }
-        return true;
+        
+        return sb.toString();
     }
 }
