@@ -1,18 +1,34 @@
-// Last updated: 23/9/2025, 11:47:37 pm
+// Last updated: 23/9/2025, 11:48:33 pm
+import java.util.*;
+
 class Solution {
-    public boolean canJump(int[] nums) {
-        int n = nums.length;
-        int farthest = 0; // The farthest index we can reach
-        
-        for (int i = 0; i < n; i++) {
-            // If current index is beyond the farthest reachable, we cannot continue
-            if (i > farthest) return false;
-            
-            // Update the farthest reachable index
-            farthest = Math.max(farthest, i + nums[i]);
+    public String getPermutation(int n, int k) {
+        // List of numbers to get elements from
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            numbers.add(i);
         }
         
-        // If we can reach or go beyond the last index
-        return farthest >= n - 1;
+        // Factorials up to n
+        int[] factorial = new int[n];
+        factorial[0] = 1;
+        for (int i = 1; i < n; i++) {
+            factorial[i] = factorial[i - 1] * i;
+        }
+        
+        // Convert k to 0-based index
+        k--;
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for (int i = n; i >= 1; i--) {
+            int index = k / factorial[i - 1];
+            sb.append(numbers.get(index));
+            numbers.remove(index);
+            
+            k = k % factorial[i - 1];
+        }
+        
+        return sb.toString();
     }
 }
