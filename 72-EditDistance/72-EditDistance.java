@@ -1,30 +1,45 @@
-// Last updated: 23/9/2025, 5:59:34 am
+// Last updated: 23/9/2025, 6:03:27 am
+
+
 class Solution {
-    public int minDistance(String word1, String word2) {
-        int m = word1.length();
-        int n = word2.length();
-        
-        int[][] dp = new int[m+1][n+1];
-        
-        // Base cases
-        for (int i = 0; i <= m; i++) dp[i][0] = i;
-        for (int j = 0; j <= n; j++) dp[0][j] = j;
-        
-        // Fill DP table
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                if (word1.charAt(i-1) == word2.charAt(j-1)) {
-                    dp[i][j] = dp[i-1][j-1];
-                } else {
-                    dp[i][j] = 1 + Math.min(
-                        dp[i-1][j-1], // replace
-                        Math.min(dp[i-1][j], // delete
-                                 dp[i][j-1]) // insert
-                    );
-                }
+    private Map<String, Boolean> memo = new HashMap<>();
+
+    public boolean isScramble(String s1, String s2) {
+        if (s1.equals(s2)) return true;
+
+        String key = s1 + "#" + s2;
+        if (memo.containsKey(key)) return memo.get(key);
+
+        if (!haveSameChars(s1, s2)) {
+            memo.put(key, false);
+            return false;
+        }
+
+        int n = s1.length();
+        for (int i = 1; i < n; i++) {
+            // No swap
+            if (isScramble(s1.substring(0, i), s2.substring(0, i)) &&
+                isScramble(s1.substring(i), s2.substring(i))) {
+                memo.put(key, true);
+                return true;
+            }
+            // Swap
+            if (isScramble(s1.substring(0, i), s2.substring(n - i)) &&
+                isScramble(s1.substring(i), s2.substring(0, n - i))) {
+                memo.put(key, true);
+                return true;
             }
         }
-        
-        return dp[m][n];
+
+        memo.put(key, false);
+        return false;
+    }
+
+    private boolean haveSameChars(String a, String b) {
+        char[] arr1 = a.toCharArray();
+        char[] arr2 = b.toCharArray();
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+        return Arrays.equals(arr1, arr2);
     }
 }
