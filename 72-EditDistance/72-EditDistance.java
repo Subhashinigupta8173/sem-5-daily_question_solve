@@ -1,33 +1,32 @@
-// Last updated: 23/9/2025, 6:04:35 am
+// Last updated: 23/9/2025, 6:06:03 am
+
+
 class Solution {
-    public boolean isInterleave(String s1, String s2, String s3) {
-        int m = s1.length();
-        int n = s2.length();
-        
-        if (m + n != s3.length()) return false;
-        
-        boolean[][] dp = new boolean[m + 1][n + 1];
-        dp[0][0] = true;
-        
-        // Fill first row
-        for (int i = 1; i <= m; i++) {
-            dp[i][0] = dp[i-1][0] && s1.charAt(i-1) == s3.charAt(i-1);
+    public List<List<String>> partition(String s) {
+        List<List<String>> result = new ArrayList<>();
+        backtrack(s, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backtrack(String s, int start, List<String> current, List<List<String>> result) {
+        if (start == s.length()) {
+            result.add(new ArrayList<>(current));
+            return;
         }
-        
-        // Fill first column
-        for (int j = 1; j <= n; j++) {
-            dp[0][j] = dp[0][j-1] && s2.charAt(j-1) == s3.charAt(j-1);
-        }
-        
-        // Fill rest of DP table
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                char c = s3.charAt(i + j - 1);
-                dp[i][j] = (dp[i-1][j] && s1.charAt(i-1) == c) ||
-                           (dp[i][j-1] && s2.charAt(j-1) == c);
+
+        for (int end = start; end < s.length(); end++) {
+            if (isPalindrome(s, start, end)) {
+                current.add(s.substring(start, end + 1));
+                backtrack(s, end + 1, current, result);
+                current.remove(current.size() - 1); // backtrack
             }
         }
-        
-        return dp[m][n];
+    }
+
+    private boolean isPalindrome(String s, int left, int right) {
+        while (left < right) {
+            if (s.charAt(left++) != s.charAt(right--)) return false;
+        }
+        return true;
     }
 }
