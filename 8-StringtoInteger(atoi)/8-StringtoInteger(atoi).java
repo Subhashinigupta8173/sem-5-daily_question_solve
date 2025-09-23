@@ -1,24 +1,18 @@
-// Last updated: 23/9/2025, 11:46:55 pm
+// Last updated: 23/9/2025, 11:47:37 pm
 class Solution {
-    public int jump(int[] nums) {
+    public boolean canJump(int[] nums) {
         int n = nums.length;
-        if (n == 1) return 0; // Already at the last index
+        int farthest = 0; // The farthest index we can reach
         
-        int jumps = 0;   // Number of jumps made
-        int currEnd = 0; // End of the current jump range
-        int farthest = 0; // Farthest reachable index in the current range
-        
-        for (int i = 0; i < n - 1; i++) {
-            // Update the farthest we can reach from current index
-            farthest = Math.max(farthest, i + nums[i]);
+        for (int i = 0; i < n; i++) {
+            // If current index is beyond the farthest reachable, we cannot continue
+            if (i > farthest) return false;
             
-            // If we have reached the end of the current jump, increase jumps
-            if (i == currEnd) {
-                jumps++;
-                currEnd = farthest;
-            }
+            // Update the farthest reachable index
+            farthest = Math.max(farthest, i + nums[i]);
         }
         
-        return jumps;
+        // If we can reach or go beyond the last index
+        return farthest >= n - 1;
     }
 }
