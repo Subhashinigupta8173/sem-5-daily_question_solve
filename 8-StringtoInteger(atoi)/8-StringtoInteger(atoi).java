@@ -1,34 +1,24 @@
-// Last updated: 23/9/2025, 11:45:54 pm
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
+// Last updated: 23/9/2025, 11:46:55 pm
 class Solution {
-    public ListNode swapPairs(ListNode head) {
-        // Dummy node to simplify head swaps
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode prev = dummy;
-
-        while (prev.next != null && prev.next.next != null) {
-            ListNode first = prev.next;
-            ListNode second = first.next;
-
-            // Swap the pair
-            first.next = second.next;
-            second.next = first;
-            prev.next = second;
-
-            // Move prev pointer for next pair
-            prev = first;
+    public int jump(int[] nums) {
+        int n = nums.length;
+        if (n == 1) return 0; // Already at the last index
+        
+        int jumps = 0;   // Number of jumps made
+        int currEnd = 0; // End of the current jump range
+        int farthest = 0; // Farthest reachable index in the current range
+        
+        for (int i = 0; i < n - 1; i++) {
+            // Update the farthest we can reach from current index
+            farthest = Math.max(farthest, i + nums[i]);
+            
+            // If we have reached the end of the current jump, increase jumps
+            if (i == currEnd) {
+                jumps++;
+                currEnd = farthest;
+            }
         }
-
-        return dummy.next;
+        
+        return jumps;
     }
 }
