@@ -1,45 +1,33 @@
-// Last updated: 23/9/2025, 6:03:27 am
-
-
+// Last updated: 23/9/2025, 6:04:35 am
 class Solution {
-    private Map<String, Boolean> memo = new HashMap<>();
-
-    public boolean isScramble(String s1, String s2) {
-        if (s1.equals(s2)) return true;
-
-        String key = s1 + "#" + s2;
-        if (memo.containsKey(key)) return memo.get(key);
-
-        if (!haveSameChars(s1, s2)) {
-            memo.put(key, false);
-            return false;
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int m = s1.length();
+        int n = s2.length();
+        
+        if (m + n != s3.length()) return false;
+        
+        boolean[][] dp = new boolean[m + 1][n + 1];
+        dp[0][0] = true;
+        
+        // Fill first row
+        for (int i = 1; i <= m; i++) {
+            dp[i][0] = dp[i-1][0] && s1.charAt(i-1) == s3.charAt(i-1);
         }
-
-        int n = s1.length();
-        for (int i = 1; i < n; i++) {
-            // No swap
-            if (isScramble(s1.substring(0, i), s2.substring(0, i)) &&
-                isScramble(s1.substring(i), s2.substring(i))) {
-                memo.put(key, true);
-                return true;
-            }
-            // Swap
-            if (isScramble(s1.substring(0, i), s2.substring(n - i)) &&
-                isScramble(s1.substring(i), s2.substring(0, n - i))) {
-                memo.put(key, true);
-                return true;
+        
+        // Fill first column
+        for (int j = 1; j <= n; j++) {
+            dp[0][j] = dp[0][j-1] && s2.charAt(j-1) == s3.charAt(j-1);
+        }
+        
+        // Fill rest of DP table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                char c = s3.charAt(i + j - 1);
+                dp[i][j] = (dp[i-1][j] && s1.charAt(i-1) == c) ||
+                           (dp[i][j-1] && s2.charAt(j-1) == c);
             }
         }
-
-        memo.put(key, false);
-        return false;
-    }
-
-    private boolean haveSameChars(String a, String b) {
-        char[] arr1 = a.toCharArray();
-        char[] arr2 = b.toCharArray();
-        Arrays.sort(arr1);
-        Arrays.sort(arr2);
-        return Arrays.equals(arr1, arr2);
+        
+        return dp[m][n];
     }
 }
