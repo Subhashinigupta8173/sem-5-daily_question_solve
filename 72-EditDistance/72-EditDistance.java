@@ -1,16 +1,19 @@
-// Last updated: 23/9/2025, 6:06:52 am
+// Last updated: 23/9/2025, 6:08:21 am
 class Solution {
-    public String reverseWords(String s) {
-        // Trim and split by one or more spaces
-        String[] words = s.trim().split("\\s+");
+    public int compareVersion(String version1, String version2) {
+        String[] v1 = version1.split("\\.");
+        String[] v2 = version2.split("\\.");
         
-        // Reverse words
-        StringBuilder sb = new StringBuilder();
-        for (int i = words.length - 1; i >= 0; i--) {
-            sb.append(words[i]);
-            if (i > 0) sb.append(" ");
+        int n = Math.max(v1.length, v2.length);
+        
+        for (int i = 0; i < n; i++) {
+            int num1 = i < v1.length ? Integer.parseInt(v1[i]) : 0;
+            int num2 = i < v2.length ? Integer.parseInt(v2[i]) : 0;
+            
+            if (num1 < num2) return -1;
+            if (num1 > num2) return 1;
         }
         
-        return sb.toString();
+        return 0;
     }
 }
