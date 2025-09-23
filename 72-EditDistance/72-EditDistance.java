@@ -1,19 +1,40 @@
-// Last updated: 23/9/2025, 6:08:21 am
+// Last updated: 23/9/2025, 6:09:42 am
+
+
 class Solution {
-    public int compareVersion(String version1, String version2) {
-        String[] v1 = version1.split("\\.");
-        String[] v2 = version2.split("\\.");
-        
-        int n = Math.max(v1.length, v2.length);
-        
-        for (int i = 0; i < n; i++) {
-            int num1 = i < v1.length ? Integer.parseInt(v1[i]) : 0;
-            int num2 = i < v2.length ? Integer.parseInt(v2[i]) : 0;
-            
-            if (num1 < num2) return -1;
-            if (num1 > num2) return 1;
+    public String fractionToDecimal(int numerator, int denominator) {
+        if (numerator == 0) return "0";
+
+        StringBuilder sb = new StringBuilder();
+
+        // Handle sign
+        if ((numerator < 0) ^ (denominator < 0)) sb.append("-");
+
+        // Use long to avoid overflow
+        long num = Math.abs((long) numerator);
+        long den = Math.abs((long) denominator);
+
+        // Integer part
+        sb.append(num / den);
+        long remainder = num % den;
+        if (remainder == 0) return sb.toString();
+
+        sb.append(".");
+        Map<Long, Integer> map = new HashMap<>(); // remainder -> index in sb
+
+        while (remainder != 0) {
+            if (map.containsKey(remainder)) {
+                int index = map.get(remainder);
+                sb.insert(index, "(");
+                sb.append(")");
+                break;
+            }
+            map.put(remainder, sb.length());
+            remainder *= 10;
+            sb.append(remainder / den);
+            remainder %= den;
         }
-        
-        return 0;
+
+        return sb.toString();
     }
 }
