@@ -1,19 +1,18 @@
-// Last updated: 3/9/2025, 8:19:41 am
+// Last updated: 24/9/2025, 8:26:29 pm
 class Solution {
-    public List<String> fizzBuzz(int n) {
-        List<String> result = new ArrayList<>();
+    public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+        // Area of first rectangle
+        int areaA = (ax2 - ax1) * (ay2 - ay1);
+        // Area of second rectangle
+        int areaB = (bx2 - bx1) * (by2 - by1);
+
+        // Overlap dimensions
+        int overlapWidth = Math.max(0, Math.min(ax2, bx2) - Math.max(ax1, bx1));
+        int overlapHeight = Math.max(0, Math.min(ay2, by2) - Math.max(ay1, by1));
+        int overlapArea = overlapWidth * overlapHeight;
+
+        // Total area = area of both - overlap
+        return areaA + areaB - overlapArea;
         
-        for (int i = 1; i <= n; i++) {
-            StringBuilder sb = new StringBuilder();
-            
-            if (i % 3 == 0) sb.append("Fizz");
-            if (i % 5 == 0) sb.append("Buzz");
-            
-            if (sb.length() == 0) sb.append(i);
-            
-            result.add(sb.toString());
-        }
-        
-        return result;
     }
 }
