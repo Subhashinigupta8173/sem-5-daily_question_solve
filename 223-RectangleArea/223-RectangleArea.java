@@ -1,18 +1,37 @@
-// Last updated: 24/9/2025, 8:26:29 pm
+// Last updated: 24/9/2025, 8:27:30 pm
 class Solution {
-    public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
-        // Area of first rectangle
-        int areaA = (ax2 - ax1) * (ay2 - ay1);
-        // Area of second rectangle
-        int areaB = (bx2 - bx1) * (by2 - by1);
-
-        // Overlap dimensions
-        int overlapWidth = Math.max(0, Math.min(ax2, bx2) - Math.max(ax1, bx1));
-        int overlapHeight = Math.max(0, Math.min(ay2, by2) - Math.max(ay1, by1));
-        int overlapArea = overlapWidth * overlapHeight;
-
-        // Total area = area of both - overlap
-        return areaA + areaB - overlapArea;
+    public int calculate(String s) {
         
+        if (s == null || s.length() == 0) return 0;
+        
+        Stack<Integer> stack = new Stack<>();
+        int num = 0;
+        char sign = '+';
+        
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            
+            if (Character.isDigit(c)) {
+                num = num * 10 + (c - '0');
+            }
+            
+            if ((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {
+                if (sign == '+') {
+                    stack.push(num);
+                } else if (sign == '-') {
+                    stack.push(-num);
+                } else if (sign == '*') {
+                    stack.push(stack.pop() * num);
+                } else if (sign == '/') {
+                    stack.push(stack.pop() / num); // truncates toward zero
+                }
+                sign = c;
+                num = 0;
+            }
+        }
+        
+        int result = 0;
+        for (int n : stack) result += n;
+        return result;
     }
 }
