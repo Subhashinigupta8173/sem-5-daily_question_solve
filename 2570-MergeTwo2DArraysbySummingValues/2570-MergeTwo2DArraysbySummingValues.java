@@ -1,4 +1,4 @@
-// Last updated: 26/11/2025, 9:05:58 pm
+// Last updated: 26/11/2025, 9:06:10 pm
 1class Solution {
 2    public int[][] mergeArrays(int[][] nums1, int[][] nums2) {
 3        List<int[]> ll=new ArrayList<>();
