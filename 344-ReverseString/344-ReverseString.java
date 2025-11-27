@@ -1,18 +1,21 @@
-// Last updated: 5/8/2025, 10:24:41 pm
-class Solution {
-    public void reverseString(char[] s) {
-        int left = 0;
-        int right = s.length - 1;
-        
-        while (left < right) {
-           
-            char temp = s[left];
-            s[left] = s[right];
-            s[right] = temp;
-            
-           
-            left++;
-            right--;
-        }
-    }
-}
+// Last updated: 27/11/2025, 7:55:02 pm
+1class Solution {
+2    public void reverseString(char[] s) {
+3        int l=0;
+4        int r=s.length-1;
+5        while(l<r){
+6            char ch=s[l];
+7            s[l]=s[r];
+8            s[r]=ch;
+9
+10            l++;
+11            r--;
+12        }
+13
+14
+15
+16
+17
+18        
+19    }
+20}
