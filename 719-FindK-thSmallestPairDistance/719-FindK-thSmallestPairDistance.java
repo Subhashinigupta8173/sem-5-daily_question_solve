@@ -1,4 +1,4 @@
-// Last updated: 29/11/2025, 7:27:54 pm
+// Last updated: 29/11/2025, 7:28:13 pm
 1class Solution {
 2    public int smallestDistancePair(int[] nums, int k) {
 3       Arrays.sort(nums);
