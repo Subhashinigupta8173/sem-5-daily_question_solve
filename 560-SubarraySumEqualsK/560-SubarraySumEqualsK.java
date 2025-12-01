@@ -1,4 +1,4 @@
-// Last updated: 1/12/2025, 5:42:52 pm
+// Last updated: 1/12/2025, 5:45:14 pm
 1class Solution {
 2    public int subarraySum(int[] nums, int k) {
 3        Map<Integer,Integer> map=new HashMap<>();
