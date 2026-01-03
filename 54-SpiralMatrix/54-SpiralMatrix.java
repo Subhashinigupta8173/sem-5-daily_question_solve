@@ -1,74 +1,46 @@
-// Last updated: 5/8/2025, 10:25:29 pm
-class Solution {
-    public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> result = new ArrayList<>();
-        if (matrix == null || matrix.length == 0) return result;
-
-        int m = matrix.length;
-        int n = matrix[0].length;
-        int top = 0;
-        int bottom = m - 1;
-        int left = 0;
-        int right = n - 1;
-
-        while (top <= bottom && left <= right) {
-            
-            for (int i = left; i <= right; i++) {
-                result.add(matrix[top][i]);
-            }
-            top++;
-
-            
-            for (int i = top; i <= bottom; i++) {
-                result.add(matrix[i][right]);
-            }
-            right--;
-
-            if (top <= bottom) {
-                
-                for (int i = right; i >= left; i--) {
-                    result.add(matrix[bottom][i]);
-                }
-                bottom--;
-            }
-
-            if (left <= right) {
-                
-                for (int i = bottom; i >= top; i--) {
-                    result.add(matrix[i][left]);
-                }
-                left++;
-            }
-        }
-
-        return result;
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println();
-        int m = scanner.nextInt();
-
-       
-        int n = scanner.nextInt();
-
-        if (m <= 0 || n <= 0) {
-            System.out.println();
-            return;
-        }
-
-        int[][] matrix = new int[m][n];
-
-        System.out.println();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                matrix[i][j] = scanner.nextInt();
-            }
-        }
-
-        Solution solution = new Solution();
-        List<Integer> result = solution.spiralOrder(matrix);
-
-        System.out.println( result);
-    }
-}
+// Last updated: 3/1/2026, 9:44:09 pm
+1class Solution {
+2    public List<Integer> spiralOrder(int[][] matrix) {
+3        List<Integer> ans = new ArrayList<>();
+4
+5        int m = matrix.length;
+6        int n = matrix[0].length;
+7
+8        int top = 0, bottom = m - 1;
+9        int left = 0, right = n - 1;
+10
+11        while (top <= bottom && left <= right) {
+12
+13        
+14            for (int j = left; j <= right; j++) {
+15                ans.add(matrix[top][j]);
+16            }
+17            top++;
+18
+19    
+20            for (int i = top; i <= bottom; i++) {
+21                ans.add(matrix[i][right]);
+22            }
+23            right--;
+24
+25            
+26            if (top <= bottom) {
+27                for (int j = right; j >= left; j--) {
+28                    ans.add(matrix[bottom][j]);
+29                }
+30                bottom--;
+31            }
+32
+33            
+34            if (left <= right) {
+35                for (int i = bottom; i >= top; i--) {
+36                    ans.add(matrix[i][left]);
+37                }
+38                left++;
+39            }
+40        }
+41
+42        return ans;
+43    }
+44}
+45
