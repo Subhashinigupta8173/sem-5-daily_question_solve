@@ -1,4 +1,4 @@
-// Last updated: 12/2/2026, 12:21:53 pm
+// Last updated: 12/2/2026, 12:23:31 pm
 1class Solution {
 2    public int[] maximizeXor(int[] arr, int[][] queries) {
 3        
