@@ -1,40 +1,44 @@
-// Last updated: 29/1/2026, 12:16:12 pm
-1class Solution {
-2    public List<List<Integer>> threeSum(int[] arr) {
-3        Arrays.sort(arr);
-4        List<List<Integer>> res = new ArrayList<>();
+// Last updated: 9/3/2026, 5:18:43 pm
+1import java.util.*;
+2
+3class Solution {
+4    public List<List<Integer>> threeSum(int[] nums) {
 5
-6        for (int i = 0; i < arr.length - 2; i++) {
-7
-8            // ---- skip duplicate values for first element ----
-9            if (i > 0 && arr[i] == arr[i - 1]) continue;
+6        List<List<Integer>> result = new ArrayList<>();
+7        Arrays.sort(nums);
+8
+9        for(int i = 0; i < nums.length - 2; i++){
 10
-11            int j = i + 1;
-12            int k = arr.length - 1;
+11            if(i > 0 && nums[i] == nums[i-1])
+12                continue;
 13
-14            while (j < k) {
-15                int sum = arr[i] + arr[j] + arr[k];
+14            int j = i + 1;
+15            int k = nums.length - 1;
 16
-17                if (sum == 0) {
-18                    res.add(Arrays.asList(arr[i], arr[j], arr[k]));
-19                    j++;
-20                    k--;
-21
-22                    // ---- skip duplicate values for second element ----
-23                    while (j < k && arr[j] == arr[j - 1]) j++;
+17            while(j < k){
+18
+19                int sum = nums[i] + nums[j] + nums[k];
+20
+21                if(sum == 0){
+22
+23                    result.add(Arrays.asList(nums[i], nums[j], nums[k]));
 24
-25                    // ---- skip duplicate values for third element ----
-26                    while (j < k && arr[k] == arr[k + 1]) k--;
-27                }
-28                else if (sum < 0) {
-29                    j++;
+25                    j++;
+26                    k--;
+27
+28                    while(j < k && nums[j] == nums[j-1]) j++;
+29                    while(j < k && nums[k] == nums[k+1]) k--;
 30                }
-31                else {
-32                    k--;
-33                }
-34            }
-35        }
-36        return res;
-37    }
-38}
-39
+31
+32                else if(sum < 0){
+33                    j++;
+34                }
+35                else{
+36                    k--;
+37                }
+38            }
+39        }
+40
+41        return result;
+42    }
+43}
