@@ -1,16 +1,32 @@
-// Last updated: 11/3/2026, 7:06:21 pm
-1class Solution {
-2    public boolean isPalindrome(int x) {
-3        int ans=x;
-4        int rev=0;
-5        if(x<0){
-6            return false;
-7        }
-8        while(x!=0){
-9            int d=x%10;
-10            rev=rev*10+d;
-11            x=x/10;
-12        }
-13        return rev==ans;
-14    }
-15}
+// Last updated: 11/3/2026, 7:19:46 pm
+1import java.util.*;
+2
+3class Solution {
+4    public boolean isValid(String s) {
+5
+6        Stack<Character> stack = new Stack<>();
+7
+8        for(int i = 0; i < s.length(); i++){
+9
+10            char c = s.charAt(i);
+11
+12            if(c == '(' || c == '{' || c == '['){
+13                stack.push(c);
+14            }
+15            else{
+16
+17                if(stack.isEmpty()){
+18                    return false;
+19                }
+20
+21                char top = stack.pop();
+22
+23                if(c == ')' && top != '(') return false;
+24                if(c == '}' && top != '{') return false;
+25                if(c == ']' && top != '[') return false;
+26            }
+27        }
+28
+29        return stack.isEmpty();
+30    }
+31}
