@@ -1,35 +1,29 @@
-// Last updated: 19/1/2026, 9:54:47 pm
-1/**
-2 * Definition for singly-linked list.
-3 * public class ListNode {
-4 *     int val;
-5 *     ListNode next;
-6 *     ListNode() {}
-7 *     ListNode(int val) { this.val = val; }
-8 *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-9 * }
-10 */
-11class Solution {
-12    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-13        ListNode dummyHead=new ListNode(0);
-14        ListNode current = dummyHead;
-15        int carry =0;
-16  
-17    
-18    while(l1!=null || l2!= null){
-19        int x=(l1!=null)? l1.val:0;
-20        int y=(l2!=null )?l2.val:0;
-21        int sum= carry+x+y;
-22        carry =sum/10;
-23        current.next=new ListNode(sum%10);
-24        current=current.next;
-25        if(l1!=null) l1=l1.next;
-26        if(l2!=null)l2=l2.next;
+// Last updated: 11/3/2026, 6:02:25 pm
+1import java.util.*;
+2
+3class Solution {
+4    public int lengthOfLongestSubstring(String s) {
+5
+6        HashMap<Character,Integer> freq = new HashMap<>();
+7
+8        int j = 0;
+9        int max = 0;
+10
+11        for(int i = 0; i < s.length(); i++){
+12
+13            char c = s.charAt(i);
+14
+15            freq.put(c, freq.getOrDefault(c,0) + 1);
+16
+17            while(freq.get(c) > 1){
+18                char left = s.charAt(j);
+19                freq.put(left, freq.get(left) - 1);
+20                j++;
+21            }
+22
+23            max = Math.max(max, i - j + 1);
+24        }
+25
+26        return max;
 27    }
-28    if(carry>0){
-29        current.next=new ListNode(carry);
-30
-31    }
-32    return dummyHead.next;
-33    }
-34}
+28}
