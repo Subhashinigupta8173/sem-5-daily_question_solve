@@ -1,20 +1,23 @@
-// Last updated: 14/3/2026, 3:33:44 pm
+// Last updated: 14/3/2026, 5:22:55 pm
 1class Solution {
-2    public int removeElement(int[] nums, int val) {
-3        
-4        int c=0;
-5        for(int i=0; i<nums.length; i++){
-6            
-7            if(nums[i]!=val){
-8                
-9                nums[c]=nums[i];
-10
-11               
-12
-13                c++;
-14            }
-15        }
-16        return c;
-17        
-18    }
-19}
+2    public int firstMissingPositive(int[] nums) {
+3
+4        int n = nums.length;
+5
+6        for(int i = 0; i < n; i++){
+7            while(nums[i] > 0 && nums[i] <= n && nums[nums[i]-1] != nums[i]){
+8                int temp = nums[i];
+9                nums[i] = nums[temp-1];
+10                nums[temp-1] = temp;
+11            }
+12        }
+13
+14        for(int i = 0; i < n; i++){
+15            if(nums[i] != i+1){
+16                return i+1;
+17            }
+18        }
+19
+20        return n+1;
+21    }
+22}
