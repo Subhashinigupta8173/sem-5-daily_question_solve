@@ -1,34 +1,31 @@
-// Last updated: 11/3/2026, 7:35:57 pm
-1/**
-2 * Definition for singly-linked list.
-3 * public class ListNode {
-4 *     int val;
-5 *     ListNode next;
-6 *     ListNode() {}
-7 *     ListNode(int val) { this.val = val; }
-8 *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-9 * }
-10 */
-11class Solution {
-12    public ListNode removeNthFromEnd(ListNode head, int n) {
-13
-14        ListNode dummy = new ListNode(0);
-15        dummy.next = head;
-16
-17        ListNode fast = dummy;
-18        ListNode slow = dummy;
-19
-20        for(int i = 0; i <= n; i++){
-21            fast = fast.next;
-22        }
-23
-24        while(fast != null){
-25            fast = fast.next;
-26            slow = slow.next;
-27        }
-28
-29        slow.next = slow.next.next;
-30
-31        return dummy.next;
-32    }
-33}
+// Last updated: 19/7/2026, 11:04:44 am
+1class Solution {
+2    public int myAtoi(String s) {
+3        if (s == null || s.length() == 0) return 0;
+4
+5        int i = 0, n = s.length();
+6        // 1. Skip leading whitespaces
+7        while (i < n && s.charAt(i) == ' ') i++;
+8
+9        // 2. Handle sign
+10        int sign = 1;
+11        if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
+12            if (s.charAt(i) == '-') sign = -1;
+13            i++;
+14        }
+15
+16        // 3. Convert digits to integer
+17        long result = 0; // use long to prevent overflow during calculation
+18        while (i < n && Character.isDigit(s.charAt(i))) {
+19            result = result * 10 + (s.charAt(i) - '0');
+20
+21            // 4. Check overflow
+22            if (sign * result > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+23            if (sign * result < Integer.MIN_VALUE) return Integer.MIN_VALUE;
+24
+25            i++;
+26        }
+27
+28        return (int)(sign * result);
+29    }
+30}
