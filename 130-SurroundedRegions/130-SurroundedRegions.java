@@ -1,91 +1,69 @@
-// Last updated: 28/7/2026, 8:22:13 am
-1import java.util.*;
+// Last updated: 28/7/2026, 8:23:08 am
+1class Solution {
 2
-3class Solution {
-4    public void solve(char[][] board) {
+3    int[] dr = {-1, 1, 0, 0};
+4    int[] dc = {0, 0, -1, 1};
 5
-6        Queue<int[]> q = new LinkedList<>();
+6    public void solve(char[][] board) {
 7
 8        int n = board.length;
 9        int m = board[0].length;
 10
 11        // First row and Last row
-12        for (int i = 0; i < m; i++) {
+12        for (int j = 0; j < m; j++) {
 13
-14            // First row
-15            if (board[0][i] == 'O') {
-16                q.offer(new int[]{0, i});
-17                board[0][i] = '#';
-18            }
-19
-20            // Last row
-21            if (board[n - 1][i] == 'O') {
-22                q.offer(new int[]{n - 1, i});
-23                board[n - 1][i] = '#';
-24            }
-25        }
-26
-27        // First column and Last column
-28        for (int i = 0; i < n; i++) {
+14            if (board[0][j] == 'O') {
+15                dfs(board, 0, j);
+16            }
+17
+18            if (board[n - 1][j] == 'O') {
+19                dfs(board, n - 1, j);
+20            }
+21        }
+22
+23        // First column and Last column
+24        for (int i = 0; i < n; i++) {
+25
+26            if (board[i][0] == 'O') {
+27                dfs(board, i, 0);
+28            }
 29
-30            // First column
-31            if (board[i][0] == 'O') {
-32                q.offer(new int[]{i, 0});
-33                board[i][0] = '#';
-34            }
-35
-36            // Last column
-37            if (board[i][m - 1] == 'O') {
-38                q.offer(new int[]{i, m - 1});
-39                board[i][m - 1] = '#';
-40            }
-41        }
+30            if (board[i][m - 1] == 'O') {
+31                dfs(board, i, m - 1);
+32            }
+33        }
+34
+35        // Convert board
+36        for (int i = 0; i < n; i++) {
+37            for (int j = 0; j < m; j++) {
+38
+39                if (board[i][j] == 'O') {
+40                    board[i][j] = 'X';
+41                }
 42
-43        // Directions
-44        int[] dr = {0, 0, -1, 1};
-45        int[] dc = {-1, 1, 0, 0};
-46
-47        // BFS
-48        while (!q.isEmpty()) {
+43                else if (board[i][j] == '#') {
+44                    board[i][j] = 'O';
+45                }
+46            }
+47        }
+48    }
 49
-50            int[] curr = q.poll();
+50    public void dfs(char[][] board, int r, int c) {
 51
-52            int r = curr[0];
-53            int c = curr[1];
+52        int n = board.length;
+53        int m = board[0].length;
 54
-55            for (int i = 0; i < 4; i++) {
-56
-57                int nr = r + dr[i];
-58                int nc = c + dc[i];
+55        // Base case
+56        if (r < 0 || r >= n || c < 0 || c >= m || board[r][c] != 'O') {
+57            return;
+58        }
 59
-60                if (nr >= 0 && nr < n &&
-61                    nc >= 0 && nc < m &&
-62                    board[nr][nc] == 'O') {
-63
-64                    // Safe mark
-65                    board[nr][nc] = '#';
-66
-67                    // Queue me daal do
-68                    q.offer(new int[]{nr, nc});
-69                }
-70            }
-71        }
-72
-73        // Final traversal
-74        for (int i = 0; i < n; i++) {
-75
-76            for (int j = 0; j < m; j++) {
-77
-78                // Surrounded O -> X
-79                if (board[i][j] == 'O') {
-80                    board[i][j] = 'X';
-81                }
-82
-83                // Safe # -> O
-84                else if (board[i][j] == '#') {
-85                    board[i][j] = 'O';
-86                }
-87            }
-88        }
-89    }
-90}
+60        // Mark as safe
+61        board[r][c] = '#';
+62
+63        // Visit 4 directions
+64        for (int i = 0; i < 4; i++) {
+65            dfs(board, r + dr[i], c + dc[i]);
+66        }
+67    }
+68}
