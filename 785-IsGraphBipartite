@@ -1,0 +1,35 @@
+// Last updated: 31/7/2026, 4:25:06 am
+1class Solution {
+2    public boolean isBipartite(int[][] graph) {
+3        int n =graph.length;
+4        int[] colors = new int[n];
+5        Arrays.fill(colors,-1);
+6        for(int i =0;i<n;i++){
+7            if(colors[i] == -1){
+8                if(!isPossible(graph,0,colors,i)){
+9                    return false;
+10                }
+11            }
+12        }
+13        return true;
+14
+15        
+16    }
+17    public static boolean  isPossible(int [][] graph,int color,int []colors ,int startingNode){
+18        colors[startingNode] = color;
+19    
+20    for(int nbrs: graph[startingNode]){
+21        if(colors[nbrs]==-1){
+22            if(!isPossible(graph,1-color,colors,nbrs)){
+23                return false;
+24            }
+25        }
+26            else if(colors[nbrs] == color){
+27                return false;
+28            }
+29        
+30        
+31    }
+32    return true;
+33    }
+34}
