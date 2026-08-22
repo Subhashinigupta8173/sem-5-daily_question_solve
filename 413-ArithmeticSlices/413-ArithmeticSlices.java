@@ -1,54 +1,51 @@
-// Last updated: 22/8/2026, 11:28:40 am
+// Last updated: 22/8/2026, 12:06:53 pm
 1class Solution {
-2    public boolean makesquare(int[] matchsticks) {
+2    List<Integer> ll;
 3
-4        int sum = 0;
+4    public boolean makesquare(int[] matchsticks) {
 5
-6        for (int x : matchsticks) {
-7            sum += x;
-8        }
+6        int sum = 0;
+7
+8        ll = new ArrayList<>();
 9
-10        if (sum % 4 != 0) {
-11            return false;
-12        }
-13
-14        int target = sum / 4;
-15
-16        int[] side = new int[4];
-17
-18        return solve(matchsticks, 0, target, side);
-19    }
+10        for (int x : matchsticks) {
+11            sum += x;
+12            ll.add(x);
+13        }
+14
+15        if (sum % 4 != 0) {
+16            return false;
+17        }
+18
+19        int tar = sum / 4;
 20
-21    public boolean solve(int[] matchsticks, int index, int target, int[] side) {
+21        Collections.sort(ll, Collections.reverseOrder());
 22
-23        if (index == matchsticks.length) {
-24            return side[0] == target &&
-25                   side[1] == target &&
-26                   side[2] == target &&
-27                   side[3] == target;
-28        }
-29
-30        int stick = matchsticks[index];
-31
-32        for (int i = 0; i < 4; i++) {
-33
-34            if (side[i] + stick <= target) {
-35
-36                side[i] += stick;
-37
-38                if (solve(matchsticks, index + 1, target, side)) {
-39                    return true;
-40                }
-41
-42                side[i] -= stick;
-43            }
+23        return solve(0, 0, 0, 0, 0, tar);
+24    }
+25
+26    public boolean solve(int s1, int s2, int s3, int s4,
+27                         int i, int tar) {
+28
+29       
+30        if (s1 > tar || s2 > tar ||
+31            s3 > tar || s4 > tar) {
+32            return false;
+33        }
+34
+35        
+36        if (i == ll.size()) {
+37            return s1 == tar &&
+38                   s2 == tar &&
+39                   s3 == tar &&
+40                   s4 == tar;
+41        }
+42
+43        int stick = ll.get(i);
 44
-45           
-46            if (side[i] == 0) {
-47                break;
-48            }
-49        }
-50
-51        return false;
-52    }
-53}
+45        return solve(s1 + stick, s2, s3, s4, i + 1, tar) ||
+46               solve(s1, s2 + stick, s3, s4, i + 1, tar) ||
+47               solve(s1, s2, s3 + stick, s4, i + 1, tar) ||
+48               solve(s1, s2, s3, s4 + stick, i + 1, tar);
+49    }
+50}
