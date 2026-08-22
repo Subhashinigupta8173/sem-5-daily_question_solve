@@ -1,25 +1,24 @@
-// Last updated: 22/8/2026, 8:04:37 am
+// Last updated: 22/8/2026, 11:14:02 am
 1class Solution {
-2    public int numberOfArithmeticSlices(int[] arr) {
-3        int n = arr.length;
-4
-5        if (n < 3) {
-6            return 0;
-7        }
-8
-9        int count = 0;
-10        int ans = 0;
-11
-12        for (int i = 2; i < n; i++) {
-13
-14            if (arr[i] - arr[i - 1] == arr[i - 1] - arr[i - 2]) {
-15                count++;
-16                ans += count;
-17            } else {
-18                count = 0;
+2    public int findTargetSumWays(int[] nums, int target) {
+3        int sum = 0;
+4        for (int i = 0; i < nums.length; i++) {
+5            sum += nums[i];
+6        }
+7        if (Math.abs(target) > sum) {
+8            return 0;
+9        }
+10        if ((sum + target) % 2 != 0) {
+11            return 0;
+12        }
+13        int s = (sum + target) / 2;
+14        int[] dp = new int[s + 1];
+15        dp[0] = 1;
+16        for (int i = 0; i < nums.length; i++) {
+17            for (int j = s; j >= nums[i]; j--) {
+18                dp[j] = dp[j] + dp[j - nums[i]];
 19            }
 20        }
-21
-22        return ans;
-23    }
-24}
+21        return dp[s];
+22    }
+23}
