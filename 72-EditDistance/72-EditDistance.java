@@ -1,40 +1,30 @@
-// Last updated: 23/9/2025, 6:09:42 am
-
-
-class Solution {
-    public String fractionToDecimal(int numerator, int denominator) {
-        if (numerator == 0) return "0";
-
-        StringBuilder sb = new StringBuilder();
-
-        // Handle sign
-        if ((numerator < 0) ^ (denominator < 0)) sb.append("-");
-
-        // Use long to avoid overflow
-        long num = Math.abs((long) numerator);
-        long den = Math.abs((long) denominator);
-
-        // Integer part
-        sb.append(num / den);
-        long remainder = num % den;
-        if (remainder == 0) return sb.toString();
-
-        sb.append(".");
-        Map<Long, Integer> map = new HashMap<>(); // remainder -> index in sb
-
-        while (remainder != 0) {
-            if (map.containsKey(remainder)) {
-                int index = map.get(remainder);
-                sb.insert(index, "(");
-                sb.append(")");
-                break;
-            }
-            map.put(remainder, sb.length());
-            remainder *= 10;
-            sb.append(remainder / den);
-            remainder %= den;
-        }
-
-        return sb.toString();
-    }
-}
+// Last updated: 23/8/2026, 7:33:42 am
+1class Solution {
+2    public int minDistance(String word1, String word2) {
+3        int m = word1.length();
+4        int n = word2.length();
+5        
+6        int[][] dp = new int[m+1][n+1];
+7        
+8       
+9        for (int i = 0; i <= m; i++) dp[i][0] = i;
+10        for (int j = 0; j <= n; j++) dp[0][j] = j;
+11        
+12        for (int i = 1; i <= m; i++) {
+13            for (int j = 1; j <= n; j++) {
+14                if (word1.charAt(i-1) == word2.charAt(j-1)) {
+15                    dp[i][j] = dp[i-1][j-1];
+16                } else {
+17                    dp[i][j] = 1 + Math.min(
+18                        dp[i-1][j-1], 
+19                        Math.min(dp[i-1][j],
+20                                 dp[i][j-1]) 
+21                    );
+22                }
+23            }
+24        }
+25        
+26        return dp[m][n];
+27    }
+28}
+29
