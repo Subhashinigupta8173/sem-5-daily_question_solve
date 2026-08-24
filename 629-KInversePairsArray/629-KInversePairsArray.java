@@ -1,29 +1,45 @@
-// Last updated: 23/8/2026, 9:17:16 pm
+// Last updated: 23/8/2026, 10:04:02 pm
 1class Solution {
-2    public int countSubstrings(String s) {
-3        int c = 0;
-4        int n = s.length();
-5
-6        for (int i = 0; i < n; i++) {
-7            for (int j = i; j < n; j++) {
-8                if (isPalindrome(s, i, j)) {
-9                    c++;
-10                }
-11            }
-12        }
-13
-14        return c;
-15    }
-16
-17    public static boolean isPalindrome(String s, int i, int j) {
-18        while (i < j) {
-19            if (s.charAt(i) != s.charAt(j)) {
-20                return false;
-21            }
-22            i++;
-23            j--;
+2    public boolean canPartitionKSubsets(int[] nums, int k) {
+3        int sum = 0;
+4        int n = nums.length;
+5        for (int i = 0; i < n; i++) {
+6            sum += nums[i];
+7        }
+8        if (sum % k != 0) {
+9            return false;
+10        }
+11        int tar = sum / k;
+12        boolean[] used = new boolean[n];
+13        return Backtrack(0, k, tar, 0, nums, used);
+14    }
+15    public boolean Backtrack(int i, int k, int tar, int newsum,
+16                             int[] nums, boolean[] used) {
+17
+18        if (k == 0) {
+19            return true;
+20        }
+21
+22        if (newsum == tar) {
+23            return Backtrack(0, k - 1, tar, 0, nums, used);
 24        }
 25
-26        return true;
-27    }
-28}
+26        for (int j = i; j < nums.length; j++) {
+27
+28            if (used[j] || newsum + nums[j] > tar) {
+29                continue;
+30            }
+31
+32            used[j] = true;
+33
+34            if (Backtrack(j + 1, k, tar,
+35                          newsum + nums[j], nums, used)) {
+36                return true;
+37            }
+38
+39            used[j] = false;
+40        }
+41
+42        return false;
+43    }
+44}
