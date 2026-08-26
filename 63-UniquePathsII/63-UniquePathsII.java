@@ -1,4 +1,4 @@
-// Last updated: 9/1/2026, 2:52:14 pm
+// Last updated: 26/8/2026, 11:02:59 am
 1class Solution {
 2    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
 3         int m = obstacleGrid.length;
@@ -8,9 +8,9 @@
 7        for (int i = 0; i < m; i++) {
 8            for (int j = 0; j < n; j++) {
 9                if (obstacleGrid[i][j] == 1) {
-10                    dp[i][j] = 0; // obstacle
+10                    dp[i][j] = 0; 
 11                } else if (i == 0 && j == 0) {
-12                    dp[i][j] = 1; // start
+12                    dp[i][j] = 1;
 13                } else {
 14                    int up = (i > 0) ? dp[i - 1][j] : 0;
 15                    int left = (j > 0) ? dp[i][j - 1] : 0;
