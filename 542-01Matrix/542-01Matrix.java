@@ -1,53 +1,38 @@
-// Last updated: 28/8/2026, 11:21:10 pm
+// Last updated: 28/8/2026, 11:25:52 pm
 1class Solution {
 2    public int[][] updateMatrix(int[][] mat) {
-3
-4        int m = mat.length;
-5        int n = mat[0].length;
-6
-7        int[][] dist = new int[m][n];
-8
-9        Queue<int[]> q = new LinkedList<>();
-10
-11        
-12        for (int i = 0; i < m; i++) {
-13            for (int j = 0; j < n; j++) {
-14
-15                if (mat[i][j] == 0) {
-16                    dist[i][j] = 0;
-17                    q.offer(new int[]{i, j});
-18                } else {
-19                    dist[i][j] = -1;
-20                }
-21            }
-22        }
-23
-24        int[] dr = {-1, 1, 0, 0};
-25        int[] dc = {0, 0, -1, 1};
-26
-27        while (!q.isEmpty()) {
-28
-29            int[] curr = q.poll();
+3        int n = mat.length;
+4        int m = mat[0].length;
+5        int [][] dist = new int [n][m];
+6        Queue<int[]> q = new LinkedList<>();
+7        for(int i = 0; i < n;i++){
+8            for(int j = 0; j < m;j++){
+9                if(mat[i][j] == 0){
+10                    dist[i][j] = 0;
+11                    q.offer(new int[] {i,j});
+12                }
+13                else{
+14                    dist[i][j] = -1;
+15                }
+16            }
+17        }
+18        int[] dr= {-1,1,0,0};
+19        int[] dc = {0,0,-1,1};
+20        while(!q.isEmpty()){
+21            int[] top = q.poll();
+22            int index = top[0];
+23            int dis = top[1];
+24            for(int i = 0; i < 4; i++){
+25                int nr = index + dr[i];
+26                int nc = dis + dc[i];
+27                if(nr >= 0 && nr < n && nc >= 0 && nc < m && dist[nr][nc] == -1){
+28                    dist[nr][nc] = 1 + dist[index][dis];
+29                    q.offer(new int []{nr,nc});
 30
-31            int row = curr[0];
-32            int col = curr[1];
+31                }
+32            }
 33
-34            for (int k = 0; k < 4; k++) {
-35
-36                int nr = row + dr[k];
-37                int nc = col + dc[k];
-38
-39                if (nr >= 0 && nr < m &&
-40                    nc >= 0 && nc < n &&
-41                    dist[nr][nc] == -1) {
-42
-43                    dist[nr][nc] = dist[row][col] + 1;
-44
-45                    q.offer(new int[]{nr, nc});
-46                }
-47            }
-48        }
-49
-50        return dist;
-51    }
-52}
+34        }
+35        return dist;
+36    }
+37}
