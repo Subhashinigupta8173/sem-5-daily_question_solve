@@ -1,55 +1,46 @@
-// Last updated: 27/7/2026, 2:20:14 am
+// Last updated: 29/8/2026, 12:32:50 am
 1class Solution {
 2    public int orangesRotting(int[][] grid) {
-3        int m = grid.length;
-4        int n = grid[0].length;
+3        int n = grid.length;
+4        int m = grid[0].length;
 5        int fresh = 0;
 6        Queue<int[]> q = new LinkedList<>();
-7        for(int i =0;i<m;i++){
-8            for(int j = 0;j<n;j++){
-9                if(grid[i][j] == 2){
-10                    q.offer(new int []{i,j});
-11                }
-12                else if (grid[i][j] == 1){
-13                    fresh++;
-14                }
+7        for (int i = 0; i < n; i++) {
+8            for (int j = 0; j < m; j++) {
+9                if (grid[i][j] == 2) {
+10                    q.offer(new int[] { i, j });
+11                } else if (grid[i][j] == 1) {
+12                    fresh++;
+13                }
+14
 15            }
 16        }
-17        if(fresh == 0){
-18            return 0;
-19        }
-20        int min = 0;
-21        int[] dr = {-1,1,0,0};
-22        int[] dc = {0,0,-1,1};
-23        //apply bsf on all rotten oranges
-24        while(!q.isEmpty() && fresh >0){
-25            int size  = q.size();
-26            for(int i  = 0;i<size;i++){
-27                int [] curr = q.poll();
-28                int row = curr[0];
-29                int col = curr[1];
-30                
-31                for(int k = 0;k<4;k++){
-32                    int newRow = row+dr[k];
-33                    int newcol = col+dc[k];
-34                    if(newRow >= 0 && newRow<m && newcol>=0 &newcol <n && grid[newRow][newcol]==1){
-35                        grid[newRow][newcol] = 2;
-36                        fresh --;
-37                        q.offer(new int []{newRow,newcol});
-38
-39                    }
-40
-41
-42                }
+17        int min = 0;
+18        if (fresh == 0) {
+19            return 0;
+20        }
+21        int[] dc = { -1, 1, 0, 0 };
+22        int[] dr = { 0, 0, -1, 1 };
+23        while (!q.isEmpty() && fresh > 0) {
+24            int size = q.size();
+25            for (int j = 0; j < size; j++) {
+26
+27                int[] top = q.poll();
+28                int r = top[0];
+29                int c = top[1];
+30                for (int i = 0; i < 4; i++) {
+31                    int nr = r + dr[i];
+32                    int nc = c + dc[i];
+33                    if (nr >= 0 && nc >= 0 && nc < m && nr < n && grid[nr][nc] == 1) {
+34                        grid[nr][nc] = 2;
+35                        fresh--;
+36                        q.offer(new int[] { nr, nc });
+37                    }
+38                }
+39            }
+40            min++;
+41        }
+42        return fresh == 0 ? min : -1;
 43
-44
-45            }
-46            min++;
-47           
-48
-49        }
-50        return fresh == 0 ? min : -1;
-51        
-52        
-53    }
-54}
+44    }
+45}
