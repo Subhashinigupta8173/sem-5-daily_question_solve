@@ -1,54 +1,38 @@
-// Last updated: 19/11/2025, 12:36:44 pm
-class Solution {
-    public int longestCycle(int[] edges) {
-        int [] in=new int [edges.length];
-		for(int i=0; i<edges.length; i++) {
-			if(edges[i]!=-1) {
-				in[edges[i]]++;
-				
-			}
-			
-			
-		}
-		Queue<Integer> q=new LinkedList<>();
-		for(int i=0;i<in .length;i++) {
-			if(in[i]==0) {
-				q.add(i);
-			}
-		}
-		boolean [] visited=new boolean [edges.length];
-		while(!q.isEmpty()) {
-			int e=q.poll();
-			visited[e]=true;
-			if(edges[e]!=-1) {
-				in[edges[e]]--;
-				if(in[edges[e]]==0) {
-					q.add(edges[e]);
-				
-			}
-			
-			}
-		}
-		int ans=-1;
-		//ak vertx pe agar visit ho chuka hai to dubara uspe visit nhi hoga 
-		for(int i=0; i<visited.length; i++ ) {// sirf false ke liye lga rh ahi a topological sort taki unme cycle chekc na ho  
-			if(visited[i]==false) { //agar visites  nhi hai to 
-				int c=1; //
-				visited[i]=true; //visited mark kar diya hai 
-				int nbrs=edges[i]; //first vertex jispe visite kar rhe ehia use hi visited bna de rhe hia 
-				while(nbrs!=i) { //neighbor chal kar vapas i pe a gya iska mtlb hia ki cycle mil gai hme
-					c++;
-					visited[nbrs]=true;
-					nbrs=edges[nbrs];
-					
-				}
-				ans=Math.max(ans, c);
-			}
-		}
-		return ans;
-	}
-	
-
-}
-        
-    
+// Last updated: 31/8/2026, 5:24:53 am
+1class Solution {
+2    int max = -1;
+3    public int longestCycle(int[] edges) {
+4        int n = edges.length;
+5       
+6        boolean[] visited = new boolean[n];
+7        boolean[] path = new boolean[n];
+8        int [] depth = new int [n];
+9        int currentcount = 0;
+10        for (int i = 0; i < n; i++) {
+11            if (!visited[i]) {
+12                dfs(i, edges, visited, path, n,depth,0);
+13            }
+14        }
+15        return max;
+16
+17    }
+18
+19    public void dfs(int node,int []edges ,boolean[]visited,boolean [] path,int n,int[] depth ,int currentcount){
+20        path[node] = true;
+21        visited[node] = true;
+22        depth[node] = currentcount;
+23        int nbrs  = edges[node];
+24        if(nbrs != -1){
+25            if(!visited[nbrs]){
+26
+27                dfs(nbrs,edges,visited,path,n,depth,currentcount+1);
+28            }
+29            else if(path[nbrs]){
+30                int cycle = currentcount - depth[nbrs] + 1;
+31                max = Math.max(max,cycle);
+32
+33            }
+34        }
+35        path[node] = false;
+36    }
+37}
