@@ -1,4 +1,4 @@
-// Last updated: 3/12/2025, 9:09:23 pm
+// Last updated: 30/9/2026, 9:32:17 pm
 1class Solution {
 2    public int canCompleteCircuit(int[] gas, int[] cost) {
 3        int n=gas.length;
