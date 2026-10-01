@@ -1,4 +1,4 @@
-// Last updated: 2/12/2025, 11:08:02 pm
+// Last updated: 1/10/2026, 11:43:00 am
 1class Solution {
 2    public boolean isValid(String s) {
 3         Stack<Character> st = new Stack<>();
