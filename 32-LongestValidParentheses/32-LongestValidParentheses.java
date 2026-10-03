@@ -1,4 +1,4 @@
-// Last updated: 9/12/2025, 7:55:39 pm
+// Last updated: 3/10/2026, 9:14:19 pm
 1class Solution {
 2    public int longestValidParentheses(String s) {
 3        Stack<Integer> st=new Stack<>();
